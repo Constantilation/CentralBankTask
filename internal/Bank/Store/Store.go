@@ -12,26 +12,32 @@ type BankStore struct {
 	Conn Interface.ConnectionInterface
 }
 
+// CheckDate checking if info of this date is already exist. Return false, if date is not exist
+func (b2 BankStore) CheckDate(ctx context.Context, date string) (bool, error) {
+	//TODO implement me
+	panic("implement me")
+}
+
 // UpdateBankInfo method to update bank info
 func (b2 BankStore) UpdateBankInfo(ctx context.Context, b *Bank.UpdateBankInfoRequest) error {
 	//TODO implement me
 	panic("implement me")
 }
 
-// MaxValue info to get max value from bank
-func (b2 BankStore) MaxValue(ctx context.Context) (domain.ValCurs, error) {
+// GetMaxValue info to get max value from bank
+func (b2 BankStore) GetMaxValue(ctx context.Context) (domain.ValCurs, error) {
 	//TODO implement me
 	panic("implement me")
 }
 
-// MinValue info to get min value from bank
-func (b2 BankStore) MinValue(ctx context.Context) (domain.ValCurs, error) {
+// GetMinValue info to get min value from bank
+func (b2 BankStore) GetMinValue(ctx context.Context) (domain.ValCurs, error) {
 	//TODO implement me
 	panic("implement me")
 }
 
-// AverageValue info to get average value from bank
-func (b2 BankStore) AverageValue(ctx context.Context) (domain.ValCurs, error) {
+// GetAverageValue info to get average value from bank
+func (b2 BankStore) GetAverageValue(ctx context.Context) (domain.ValCurs, error) {
 	//TODO implement me
 	panic("implement me")
 }

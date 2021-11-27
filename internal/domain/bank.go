@@ -12,20 +12,14 @@ import (
 
 // Valute structure for valute info
 type Valute struct {
-	ID       string `xml:"ID,attr"`
-	NumCode  int
-	CharCode string
-	Nominal  int
-	Name     string
-	Value    string
+	Name  string
+	Value float32
 }
 
 // ValCurs structure of central bank info in XML format
 type ValCurs struct {
-	XMLName xml.Name `xml:"ValCurs"`
-	Date    string   `xml:"Date,attr"`
-	Name    string   `xml:"name,attr"`
-	Valute  []Valute `xml:"Valute"`
+	Date   string   `xml:"Date,attr"`
+	Valute []Valute `xml:"Valute"`
 }
 
 func (v *ValCurs) ReformatFile(url, filename string) error {
@@ -65,8 +59,8 @@ func (v *ValCurs) ReformatFile(url, filename string) error {
 			return err
 		}
 
-		newBody := strings.Replace(string(body), "<offers>", "", -1)
-		newBody = strings.Replace(newBody, "</offers>", "", -1)
+		newBody := strings.Replace(string(body), ",", ".", -1)
+		err = xml.Unmarshal([]byte(newBody), v)
 		err = xml.Unmarshal([]byte(newBody), v)
 
 		if err != nil {

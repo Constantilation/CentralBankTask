@@ -3,7 +3,6 @@ package Application
 import (
 	"CentralBankTask/internal/Bank"
 	"CentralBankTask/internal/Interface"
-	"CentralBankTask/internal/domain"
 	"context"
 )
 
@@ -13,25 +12,27 @@ type BankApplication struct {
 }
 
 // SetBankInfo setting bank information
-func (b2 BankApplication) SetBankInfo(ctx context.Context, b *Bank.UpdateBankInfoRequest) (domain.ValCurs, error) {
-	//TODO implement me
-	panic("implement me")
+func (b2 BankApplication) SetBankInfo(ctx context.Context, b *Bank.UpdateBankInfoRequest) error {
+	res, err := b2.BankStore.CheckDate(ctx, b.Date)
+	if err != nil {
+		return err
+	}
+
+	if !res {
+		err = b2.BankStore.UpdateBankInfo(ctx, b)
+		if err != nil {
+			return err
+		}
+
+		return nil
+	}
+
+	return nil
 }
 
-// MaxValue getting max value
-func (b2 BankApplication) MaxValue(ctx context.Context) (domain.ValCurs, error) {
-	//TODO implement me
-	panic("implement me")
-}
+// GetBankInfo returning business logic info
+func (b2 BankApplication) GetBankInfo(ctx context.Context) (Bank.ResponseBankInfoRequest, error) {
+	var bankInfo Bank.ResponseBankInfoRequest
 
-// MinValue getting min value
-func (b2 BankApplication) MinValue(ctx context.Context) (domain.ValCurs, error) {
-	//TODO implement me
-	panic("implement me")
-}
 
-// AverageValue getting average value
-func (b2 BankApplication) AverageValue(ctx context.Context) (domain.ValCurs, error) {
-	//TODO implement me
-	panic("implement me")
 }
