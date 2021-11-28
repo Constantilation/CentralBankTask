@@ -25,15 +25,7 @@ type ValCurs struct {
 	Valute []Valute `xml:"Valute"`
 }
 
-type Date struct {
-	DD int
-	MM int
-	YY int
-}
-
 type DateInterval struct {
-	Beg  Date
-	End  Date
 	BegD time.Time
 	EndD time.Time
 }

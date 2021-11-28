@@ -26,12 +26,17 @@ func (b2 BankApplication) SetBankInfo(ctx context.Context, b *Bank.UpdateBankInf
 	if !res {
 		var ValCurs []domain.ValCurs
 
-		for _, value := range dateInterval.DateSlice {
+		for _, date := range dateInterval.DateSlice {
 			var download domain.ValCurs
-			err = download.ReformatFile(Utils.CentralBankDataBaseURL+Utils.ConvertTimeToString(value), "smh.yml")
+			err = download.ReformatFile(Utils.CentralBankDataBaseURL+Utils.ConvertTimeToString(date, "/"), "smh.yml")
 			if err != nil {
 				return err
 			}
+
+			if Utils.ConvertStringToTime(download.Date) != date {
+				download.Date = Utils.ConvertTimeToString(date, ".")
+			}
+
 			ValCurs = append(ValCurs, download)
 		}
 		err = b2.BankStore.UpdateBankInfo(ctx, ValCurs)

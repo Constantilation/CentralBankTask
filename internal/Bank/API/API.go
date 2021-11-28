@@ -5,9 +5,9 @@ import (
 	"CentralBankTask/internal/Interface"
 	errPkg "CentralBankTask/internal/Middleware/Error"
 	"CentralBankTask/internal/Utils"
-	"CentralBankTask/internal/domain"
 	"github.com/labstack/echo"
 	"net/http"
+	"time"
 )
 
 // BankAPI structure of Bank API
@@ -18,13 +18,13 @@ type BankAPI struct {
 
 // GetBankInfoHandler implementation of getting info
 func (b BankAPI) GetBankInfoHandler(c echo.Context) error {
-	var data domain.Date
-	data.DD, _ = Utils.InterfaceConvertInt(c.Param("day"))
-	data.MM, _ = Utils.InterfaceConvertInt(c.Param("month"))
-	data.YY, _ = Utils.InterfaceConvertInt(c.Param("year"))
+	day, _ := Utils.InterfaceConvertInt(c.Param("day"))
+	month, _ := Utils.InterfaceConvertInt(c.Param("month"))
+	year, _ := Utils.InterfaceConvertInt(c.Param("year"))
+	data := time.Date(year, time.Month(month), day, 0, 0, 0, 0, time.UTC)
 	ctx := c.Request().Context()
 	updateBankStruct := Bank.UpdateBankInfoRequest{
-		Date: Utils.ConvertDateToString(data),
+		Date: data,
 	}
 
 	err := b.BankApplication.SetBankInfo(ctx, &updateBankStruct)
