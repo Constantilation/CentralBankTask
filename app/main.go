@@ -3,6 +3,7 @@ package main
 import (
 	build "CentralBankTask/build"
 	"CentralBankTask/config"
+	templates "CentralBankTask/files/template"
 	"CentralBankTask/internal/Bank/API"
 	"CentralBankTask/internal/Interface"
 	"CentralBankTask/internal/Middleware"
@@ -11,6 +12,7 @@ import (
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	"go.uber.org/zap"
+	"html/template"
 	"os"
 )
 
@@ -43,8 +45,11 @@ func runServer() {
 	startStructure := build.SetUp(connectionJSON, logger.Log)
 	BankInfo := startStructure[0].(Interface.BankInfoAPI)
 
+	t := &templates.Template{
+		Templates: template.Must(template.ParseGlob("./files/template/index.html")),
+	}
 	e := echo.New()
-
+	e.Renderer = t
 	e.Pre(middleware.AddTrailingSlash())
 	middl := Middleware.InitMiddleware()
 	logInfo := Middleware.InfoMiddleware{

@@ -25,6 +25,11 @@ type ValCurs struct {
 	Valute []Valute `xml:"Valute"`
 }
 
+type ValuteValue struct {
+	Date   time.Time `json:"Date"`
+	Valute Valute    `json:"Valute"`
+}
+
 type DateInterval struct {
 	BegD time.Time
 	EndD time.Time

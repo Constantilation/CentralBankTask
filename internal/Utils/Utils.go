@@ -21,6 +21,10 @@ func GetDate(date time.Time) domain.DateInterval {
 	return dateFormat
 }
 
+func GetTimeNowWithoutTime() time.Time {
+	return time.Date(time.Now().Year(), time.Now().Month(), time.Now().Day(), 0, 0, 0, 0, time.UTC)
+}
+
 func ConvertStringToTime(date string) time.Time {
 	dateSlice := strings.Split(date, ".")
 	DD, _ := InterfaceConvertInt(dateSlice[0])

@@ -5,6 +5,7 @@ import (
 	"context"
 	"github.com/jackc/pgconn"
 	"github.com/jackc/pgx/v4"
+	"time"
 )
 
 // ConnectionInterface implementation of database methods interface
@@ -17,9 +18,11 @@ type ConnectionInterface interface {
 
 // BankInfoStore implementation of Store interface methods
 type BankInfoStore interface {
+	CheckCurrentDate(ctx context.Context, date time.Time) (time.Time, error)
+	AddDatesToBank(ctx context.Context, currentDate, date time.Time) error
 	UpdateBankInfo(ctx context.Context, valuteData []domain.ValCurs) error
 	CheckDate(ctx context.Context, date domain.DateInterval) (bool, domain.DownloadInterval, error)
-	GetMaxValue(ctx context.Context) (domain.ValCurs, error)
-	GetMinValue(ctx context.Context) (domain.ValCurs, error)
-	GetAverageValue(ctx context.Context) (domain.ValCurs, error)
+	GetMaxValue(ctx context.Context, dateInterval domain.DateInterval) ([]domain.ValuteValue, error)
+	GetMinValue(ctx context.Context, dateInterval domain.DateInterval) ([]domain.ValuteValue, error)
+	GetAverageValue(ctx context.Context, dateInterval domain.DateInterval) ([]domain.ValuteValue, error)
 }

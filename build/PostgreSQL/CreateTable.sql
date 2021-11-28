@@ -10,3 +10,5 @@ CREATE TABLE IF NOT EXISTS BankInfo
     valutename  TEXT,
     valuteValue FLOAT
 );
+
+CREATE INDEX bankinfo_3c_idx ON bankinfo (fulldate, valutename, valuteValue DESC);

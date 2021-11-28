@@ -1,6 +1,13 @@
 package Error
 
-// CheckErrorsBank method to check some errors, can be used as middleware, also can be expanded with a lot of errors
+import "net/http"
+
+// CheckErrorsBank can be used to handle errors, best practice - add switch over errors for every single sequence
 func (c CheckError) CheckErrorsBank(errIn error) int {
-	return 1
+	if errIn == nil {
+		return http.StatusOK
+	}
+
+	c.Logger.Errorf("", errIn.Error(), errIn)
+	return http.StatusInternalServerError
 }

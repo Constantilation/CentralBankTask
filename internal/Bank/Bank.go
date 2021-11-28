@@ -11,6 +11,8 @@ type UpdateBankInfoRequest struct {
 }
 
 type ResponseBankInfoRequest struct {
-	Date   string          `json:"date"`
-	Valute []domain.Valute `json:"valute"`
+	Date         string               `json:"Request_Data"`
+	MaxValue     []domain.ValuteValue `json:"Max_Valute"`
+	MinValue     []domain.ValuteValue `json:"Min_Valute"`
+	AverageValue []domain.ValuteValue `json:"Average_Valute"`
 }

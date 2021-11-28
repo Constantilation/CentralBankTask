@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .content {
+            display: flex;
+            justify-content: center;
+        }
+
+        .content div {
+            width: 400px;
+        }
+
+        .content__valute {
+            border: 1px solid;
+        }
+
+        .content__valute-data {
+            display: flex;
+            flex-direction: row;
+            border: 1px solid;
+        }
+
+        .content__valute-name {
+            border: 1px solid;
+        }
+    </style>
+</head>
+<body>
+
+<div class="content">
+    <div class="content__title"><h1>Result of {{ .Date}}</h1>
+        <div class="content__data">
+            <h2>Max Value</h2>
+            {{range .MaxValue}}
+            <div class="content__valute">
+                <h2>{{ .Date}}</h2>
+                <div class="content__valute-data">
+                    <div class="content__valute-name">
+                        <h2> {{ .Valute.Name}}</h2>
+                    </div>
+                    <div class="content__valute-value">
+                        <h2>{{ .Valute.Value}}</h2>
+                    </div>
+                </div>
+            </div>
+            {{else}}
+            <h3>No data for Max Value</h3>
+            {{end}}
+        </div>
+        <div class="content__data">
+            <h2>Min Value</h2>
+            {{range .MinValue}}
+            <div class="content__valute">
+                <h2>{{ .Date}}</h2>
+                <div class="content__valute-data">
+                    <div class="content__valute-name">
+                        <h2> {{ .Valute.Name}}</h2>
+                    </div>
+                    <div class="content__valute-value">
+                        <h2>{{ .Valute.Value}}</h2>
+                    </div>
+                </div>
+            </div>
+            {{else}}
+            <h3>No data for Min Value</h3>
+            {{end}}
+
+        </div>
+        <div class="content__data">
+            <h2>Avg Value</h2>
+            {{range .AverageValue}}
+            <div class="content__valute">
+                <h2>{{ .Date}}</h2>
+                <div class="content__valute-data">
+                    <div class="content__valute-name">
+                        <h2> {{ .Valute.Name}}</h2>
+                    </div>
+                    <div class="content__valute-value">
+                        <h2>{{ .Valute.Value}}</h2>
+                    </div>
+                </div>
+            </div>
+            {{else}}
+            <h3>No data for Average Value</h3>
+            {{end}}
+
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+</div>
+
+</body>
+</html>

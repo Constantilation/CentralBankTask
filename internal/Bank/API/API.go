@@ -41,7 +41,7 @@ func (b BankAPI) GetBankInfoHandler(c echo.Context) error {
 			})
 	}
 
-	bankInfo, err := b.BankApplication.GetBankInfo(ctx)
+	bankInfo, err := b.BankApplication.GetBankInfo(ctx, &updateBankStruct)
 	if err != nil {
 		return c.JSON(checkError.CheckErrorsBank(err),
 			errPkg.ResultError{
@@ -50,7 +50,7 @@ func (b BankAPI) GetBankInfoHandler(c echo.Context) error {
 			})
 	}
 
-	return c.JSON(http.StatusOK, bankInfo)
+	return c.Render(http.StatusOK, "index.html", &bankInfo)
 }
 
 // NewBankHandler will initialize the articles/ resources endpoint
