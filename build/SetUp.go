@@ -8,7 +8,7 @@ import (
 	"CentralBankTask/internal/Interface"
 	errPkg "CentralBankTask/internal/Middleware/Error"
 	"context"
-	"github.com/jackc/pgx/pgxpool"
+	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/spf13/viper"
 )
 

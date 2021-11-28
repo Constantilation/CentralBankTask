@@ -3,4 +3,4 @@ db:
   port: 5432
   username: constantil
   password: 293456QwErty
-  schemaname: hot_mexicans_db
+  schemaname: BankInfo

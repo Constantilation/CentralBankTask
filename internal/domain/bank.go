@@ -1,13 +1,16 @@
 package domain
 
 import (
-	"CentralBankTask/internal/Utils"
+	errors "CentralBankTask/internal/Middleware/Error"
 	"encoding/xml"
 	"fmt"
+	"io"
 	"io/ioutil"
+	"net/http"
 	"os"
 	"os/exec"
 	"strings"
+	"time"
 )
 
 // Valute structure for valute info
@@ -22,8 +25,25 @@ type ValCurs struct {
 	Valute []Valute `xml:"Valute"`
 }
 
+type Date struct {
+	DD int
+	MM int
+	YY int
+}
+
+type DateInterval struct {
+	Beg  Date
+	End  Date
+	BegD time.Time
+	EndD time.Time
+}
+
+type DownloadInterval struct {
+	DateSlice []time.Time
+}
+
 func (v *ValCurs) ReformatFile(url, filename string) error {
-	err := Utils.DownloadFile(filename, url)
+	err := DownloadFile(filename, url)
 	if err != nil {
 		return err
 	}
@@ -61,7 +81,6 @@ func (v *ValCurs) ReformatFile(url, filename string) error {
 
 		newBody := strings.Replace(string(body), ",", ".", -1)
 		err = xml.Unmarshal([]byte(newBody), v)
-		err = xml.Unmarshal([]byte(newBody), v)
 
 		if err != nil {
 			fmt.Println(err)
@@ -70,4 +89,32 @@ func (v *ValCurs) ReformatFile(url, filename string) error {
 
 		return nil
 	}
+}
+
+// DownloadFile func to download file by filepath and string
+func DownloadFile(filepath string, url string) error {
+	out, err := os.Create("files/" + filepath)
+	if err != nil {
+		return &errors.Errors{
+			Alias: errors.ErrCreate,
+		}
+	}
+	defer out.Close()
+
+	resp, err := http.Get(url)
+	if err != nil {
+		return &errors.Errors{
+			Alias: errors.ErrGet,
+		}
+	}
+	defer resp.Body.Close()
+
+	_, err = io.Copy(out, resp.Body)
+	if err != nil {
+		return &errors.Errors{
+			Alias: errors.ErrCopy,
+		}
+	}
+
+	return nil
 }

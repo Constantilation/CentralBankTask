@@ -4,6 +4,8 @@ import (
 	"CentralBankTask/internal/Bank"
 	"CentralBankTask/internal/Interface"
 	errPkg "CentralBankTask/internal/Middleware/Error"
+	"CentralBankTask/internal/Utils"
+	"CentralBankTask/internal/domain"
 	"github.com/labstack/echo"
 	"net/http"
 )
@@ -16,10 +18,13 @@ type BankAPI struct {
 
 // GetBankInfoHandler implementation of getting info
 func (b BankAPI) GetBankInfoHandler(c echo.Context) error {
-	date := c.Param("date")
+	var data domain.Date
+	data.DD, _ = Utils.InterfaceConvertInt(c.Param("day"))
+	data.MM, _ = Utils.InterfaceConvertInt(c.Param("month"))
+	data.YY, _ = Utils.InterfaceConvertInt(c.Param("year"))
 	ctx := c.Request().Context()
 	updateBankStruct := Bank.UpdateBankInfoRequest{
-		Date: date,
+		Date: Utils.ConvertDateToString(data),
 	}
 
 	err := b.BankApplication.SetBankInfo(ctx, &updateBankStruct)
@@ -48,7 +53,8 @@ func (b BankAPI) GetBankInfoHandler(c echo.Context) error {
 	return c.JSON(http.StatusOK, bankInfo)
 }
 
-// NewUserHandler will initialize the articles/ resources endpoint
-func NewUserHandler(e *echo.Echo, handler Interface.BankInfoAPI) {
-	e.GET("/:date", handler.GetBankInfoHandler)
+// NewBankHandler will initialize the articles/ resources endpoint
+func NewBankHandler(e *echo.Echo, handler Interface.BankInfoAPI) {
+	ug := e.Group("/:day/:month/:year")
+	ug.GET("/", handler.GetBankInfoHandler)
 }

@@ -41,9 +41,10 @@ func runServer() {
 	}
 
 	startStructure := build.SetUp(connectionJSON, logger.Log)
-	userInfo := startStructure[0].(Interface.BankInfoAPI)
+	BankInfo := startStructure[0].(Interface.BankInfoAPI)
 
 	e := echo.New()
+
 	e.Pre(middleware.AddTrailingSlash())
 	middl := Middleware.InitMiddleware()
 	logInfo := Middleware.InfoMiddleware{
@@ -51,7 +52,7 @@ func runServer() {
 	}
 	e.Use(middl.CORS)
 	e.Use(logInfo.LogURL)
-	API.NewUserHandler(e, userInfo)
+	API.NewBankHandler(e, BankInfo)
 
 	err = e.Start(appConfig.Port)
 	if err != nil {

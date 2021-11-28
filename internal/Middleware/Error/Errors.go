@@ -57,3 +57,10 @@ const (
 	MCreateDBNotDeleteTables    = "table not delete"
 	MCreateDBNotFillTables      = "table not fill"
 )
+
+// Transaction errors
+const (
+	UpdateTransactionNotCreated = "UpdateTransactionNotCreated"
+	ValutesNotInsert            = ""
+	ValutesNotCommit            = "ValutesNotCommit"
+)
