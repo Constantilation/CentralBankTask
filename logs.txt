@@ -1,0 +1,6 @@
+2021-11-28T20:50:36.936+0300	ERROR	app/main.go:41	Unable to connect to database: DeleteTables.sql not found
+2021-11-28T20:52:13.508+0300	ERROR	app/main.go:41	Unable to connect to database: CreateTables.sql not found
+2021-11-28T22:51:48.266+0300	ERROR	app/main.go:35	Config File "main" Not Found in "[/home/constantilation/go/src/CentralBankTask]"
+2021-11-28T22:51:57.472+0300	ERROR	app/main.go:35	Config File "main" Not Found in "[/home/constantilation/go/src/CentralBankTask]"
+2021-11-28T22:52:43.897+0300	ERROR	app/main.go:44	Unable to connect to database: db not connect
+2021-11-28T23:01:31.495+0300	ERROR	app/main.go:35	Config File "main" Not Found in "[/home/constantilation/go/src/CentralBankTask]"

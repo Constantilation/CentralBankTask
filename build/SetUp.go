@@ -9,15 +9,17 @@ import (
 	errPkg "CentralBankTask/internal/Middleware/Error"
 	"context"
 	"github.com/jackc/pgx/v4/pgxpool"
+	pgxpool2 "github.com/jackc/pgx/v4/pgxpool"
 	"github.com/spf13/viper"
+	"io/ioutil"
+	"strings"
 )
 
 const (
 	ConfNameMain = "main"
 	ConfNameDB   = "database"
-	ConfNameURLS = "urls"
 	ConfType     = "yml"
-	ConfPath     = "./config"
+	ConfPath     = "."
 )
 
 // InitConfig function to initialize structures
@@ -80,7 +82,7 @@ func SetUp(connectionDB Interface.ConnectionInterface, logger errPkg.MultiLogger
 }
 
 // CreateDb Creating data base structure
-func CreateDb(configDB config.Database) (*pgxpool.Pool, error) {
+func CreateDb(configDB config.Database, debug bool) (*pgxpool2.Pool, error) {
 	var err error
 	conn, err := pgxpool.Connect(context.Background(),
 		"postgres://"+configDB.UserName+":"+configDB.Password+
@@ -88,7 +90,61 @@ func CreateDb(configDB config.Database) (*pgxpool.Pool, error) {
 	if err != nil {
 		return nil, &errPkg.Errors{
 			Alias: errPkg.MCreateDBNotConnect,
+			Text:  err.Error(),
 		}
 	}
+
+	if debug {
+		file, err := ioutil.ReadFile("./DeleteTables.sql")
+		if err != nil {
+			return nil, &errPkg.Errors{
+				Alias: errPkg.MCreateDBDeleteFileNotFound,
+			}
+		}
+
+		requests := strings.Split(string(file), ";")
+		for _, request := range requests {
+			_, err = conn.Exec(context.Background(), request)
+			if err != nil {
+				return nil, &errPkg.Errors{
+					Alias: errPkg.MCreateDBNotDeleteTables,
+				}
+			}
+		}
+	}
+	file, err := ioutil.ReadFile("./CreateTables.sql")
+	if err != nil {
+		return nil, &errPkg.Errors{
+			Alias: errPkg.MCreateDBCreateFileNotFound,
+		}
+	}
+
+	requests := strings.Split(string(file), ";")
+	for _, request := range requests {
+		_, err = conn.Exec(context.Background(), request)
+		if err != nil {
+			return nil, &errPkg.Errors{
+				Alias: errPkg.MCreateDBNotCreateTables,
+			}
+		}
+	}
+
+	file, err = ioutil.ReadFile("./Fill.sql")
+	if err != nil {
+		return nil, &errPkg.Errors{
+			Alias: errPkg.MCreateDBFillFileNotFound,
+		}
+	}
+
+	requests = strings.Split(string(file), ";")
+	for _, request := range requests {
+		_, err = conn.Exec(context.Background(), request)
+		if err != nil {
+			return nil, &errPkg.Errors{
+				Alias: errPkg.MCreateDBNotFillTables,
+			}
+		}
+	}
+
 	return conn, nil
 }

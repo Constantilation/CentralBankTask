@@ -3,7 +3,6 @@ package domain
 import (
 	errors "CentralBankTask/internal/Middleware/Error"
 	"encoding/xml"
-	"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -45,7 +44,7 @@ func (v *ValCurs) ReformatFile(url, filename string) error {
 		return err
 	}
 	var path string
-	path = "./files/"
+	path = "./"
 
 	cmd := exec.Command("iconv", "-f", "cp1251", "-t", "utf8", path+filename, "-o", path+filename)
 	_, err = cmd.CombinedOutput()
@@ -63,7 +62,6 @@ func (v *ValCurs) ReformatFile(url, filename string) error {
 	resp, err := os.Open(path + filename)
 
 	if err != nil {
-		fmt.Println("Невозможно найти файл или открыть")
 		return err
 	} else {
 
@@ -80,7 +78,6 @@ func (v *ValCurs) ReformatFile(url, filename string) error {
 		err = xml.Unmarshal([]byte(newBody), v)
 
 		if err != nil {
-			fmt.Println(err)
 			return err
 		}
 
@@ -89,8 +86,8 @@ func (v *ValCurs) ReformatFile(url, filename string) error {
 }
 
 // DownloadFile func to download file by filepath and string
-func DownloadFile(filepath string, url string) error {
-	out, err := os.Create("files/" + filepath)
+func DownloadFile(filename string, url string) error {
+	out, err := os.Create("./" + filename)
 	if err != nil {
 		return &errors.Errors{
 			Alias: errors.ErrCreate,

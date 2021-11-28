@@ -1,1 +1,4 @@
 port: :5000
+
+primary:
+  debug: true

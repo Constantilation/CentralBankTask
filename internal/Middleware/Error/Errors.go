@@ -44,7 +44,13 @@ const (
 
 // Error of main
 const (
-	MCreateDBNotConnect = "db not connect"
+	MCreateDBNotConnect         = "db not connect"
+	MCreateDBCreateFileNotFound = "CreateTables.sql not found"
+	MCreateDBDeleteFileNotFound = "DeleteTables.sql not found"
+	MCreateDBFillFileNotFound   = "Fill.sql not found"
+	MCreateDBNotCreateTables    = "table not create"
+	MCreateDBNotDeleteTables    = "table not delete"
+	MCreateDBNotFillTables      = "table not fill"
 )
 
 // Transaction errors

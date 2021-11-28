@@ -24,7 +24,7 @@ func runServer() {
 		errLogger := loggerErrWarn.Sync()
 		if errLogger != nil {
 			zap.S().Errorf("LoggerErrWarn the buffer could not be cleared %v", errLogger)
-			os.Exit(1)
+			os.Exit(4)
 		}
 	}(logger.Log)
 
@@ -36,17 +36,17 @@ func runServer() {
 	dbConfig := configStructure[0].(config.DBConfig)
 	appConfig := configStructure[1].(config.AppConfig)
 
-	connectionJSON, err := build.CreateDb(dbConfig.Db)
+	connectionJSON, err := build.CreateDb(dbConfig.Db, appConfig.Primary.Debug)
 	if err != nil {
 		logger.Log.Errorf("Unable to connect to database: %s", err.Error())
-		os.Exit(1)
+		os.Exit(2)
 	}
 
 	startStructure := build.SetUp(connectionJSON, logger.Log)
 	BankInfo := startStructure[0].(Interface.BankInfoAPI)
 
 	t := &templates.Template{
-		Templates: template.Must(template.ParseGlob("./files/template/index.html")),
+		Templates: template.Must(template.ParseGlob("./index.html")),
 	}
 	e := echo.New()
 	e.Renderer = t
@@ -62,7 +62,7 @@ func runServer() {
 	err = e.Start(appConfig.Port)
 	if err != nil {
 		logger.Log.Errorf("Listen and server error: %v", err)
-		os.Exit(1)
+		os.Exit(3)
 	}
 }
 

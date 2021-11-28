@@ -21,5 +21,10 @@ type URLSConfig struct {
 }
 
 type AppConfig struct {
-	Port string
+	Port    string
+	Primary PrimaryConfig `mapstructure:"primary"`
+}
+
+type PrimaryConfig struct {
+	Debug bool
 }
