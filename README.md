@@ -17,6 +17,14 @@
 #Переключиться на директорию
 $ cd workspace
 
+#Установка Docker
+$ sudo apt-get update
+$ sudo apt-get install docker-ce docker-ce-cli containerd.io
+
+#Установка docker-compose
+$ sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+$ sudo chmod +x /usr/local/bin/docker-compose
+
 # Скопировать проект в свой $GOPATH/src
 $ git clone https://github.com/Constantilation/CentralBankTask.git
 
@@ -34,6 +42,14 @@ $ docker ps
 
 # Остановить приложение
 $ sudo make stop
+
+#В случае, если порт для бд занят, необходимо убить процесс, его занимающий
+
+#Для нахождения необходимого pid
+$ sudo ss -lptn 'sport = :80' | grep pid
+
+#Убить процесс по pid
+$ kill {pid}
 
 # Принцип работы
 $ http://localhost:5000/11/11/2021  (любая дата в формате DD/MM/YYYY. Рассчеты ведутся за 90 дней от введенной даты)
