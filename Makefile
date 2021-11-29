@@ -13,6 +13,3 @@ run:
 
 stop:
 	docker-compose down
-
-runall:
-	sudo make stop; sudo docker volume prune; sudo make docker;  sudo docker-compose --verbose up

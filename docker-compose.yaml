@@ -1,10 +1,6 @@
 version: "2.3"
 services:
   web:
-    security_opt:
-      - "seccomp:unconfined"
-    cap_add:
-      - SYS_PTRACE
     depends_on:
       postgres:
         condition: service_healthy
