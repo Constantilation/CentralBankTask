@@ -4,11 +4,11 @@ import (
 	build "CentralBankTask/build"
 	"CentralBankTask/config"
 	templates "CentralBankTask/files/template"
-	"CentralBankTask/internal/Bank/API"
-	"CentralBankTask/internal/Interface"
-	"CentralBankTask/internal/Middleware"
-	errors "CentralBankTask/internal/Middleware/Error"
-	utils "CentralBankTask/internal/Utils"
+	"CentralBankTask/inter/Bank/API"
+	"CentralBankTask/inter/Interface"
+	"CentralBankTask/inter/Middleware"
+	errors "CentralBankTask/inter/Middleware/Error"
+	utils "CentralBankTask/inter/Utils"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	"go.uber.org/zap"
@@ -58,7 +58,6 @@ func runServer() {
 	e.Use(middl.CORS)
 	e.Use(logInfo.LogURL)
 	API.NewBankHandler(e, BankInfo)
-
 	err = e.Start(appConfig.Port)
 	if err != nil {
 		logger.Log.Errorf("Listen and server error: %v", err)

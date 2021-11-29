@@ -1,7 +1,7 @@
 package Interface
 
 import (
-	"CentralBankTask/internal/domain"
+	"CentralBankTask/inter/domain"
 	"context"
 	"github.com/jackc/pgconn"
 	"github.com/jackc/pgx/v4"

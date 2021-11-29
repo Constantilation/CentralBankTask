@@ -1,8 +1,8 @@
 package Utils
 
 import (
-	errors "CentralBankTask/internal/Middleware/Error"
-	"CentralBankTask/internal/domain"
+	errors "CentralBankTask/inter/Middleware/Error"
+	"CentralBankTask/inter/domain"
 	"strconv"
 	"strings"
 	"time"

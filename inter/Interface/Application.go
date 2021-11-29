@@ -1,7 +1,7 @@
 package Interface
 
 import (
-	"CentralBankTask/internal/Bank"
+	"CentralBankTask/inter/Bank"
 	"context"
 )
 

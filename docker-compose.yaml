@@ -1,6 +1,10 @@
 version: "2.3"
 services:
   web:
+    security_opt:
+      - "seccomp:unconfined"
+    cap_add:
+      - SYS_PTRACE
     depends_on:
       postgres:
         condition: service_healthy
@@ -8,8 +12,13 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: CentralBankTask
+    logging:
+      driver: syslog
+      options:
+        tag: foo-logs
     ports:
       - "5000:5000"
+      - "40000:40000"
     volumes:
       - ./config/database.yml:/app/database.yml
       - ./config/main.yml:/app/main.yml

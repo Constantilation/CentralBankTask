@@ -1,10 +1,11 @@
 package API
 
 import (
-	"CentralBankTask/internal/Bank"
-	"CentralBankTask/internal/Interface"
-	errPkg "CentralBankTask/internal/Middleware/Error"
-	"CentralBankTask/internal/Utils"
+	"CentralBankTask/inter/Bank"
+	"CentralBankTask/inter/Interface"
+	errPkg "CentralBankTask/inter/Middleware/Error"
+	"CentralBankTask/inter/Utils"
+	"fmt"
 	"github.com/labstack/echo"
 	"net/http"
 	"time"
@@ -18,6 +19,7 @@ type BankAPI struct {
 
 // GetBankInfoHandler implementation of getting info
 func (b BankAPI) GetBankInfoHandler(c echo.Context) error {
+	fmt.Println("it happened somewhere here")
 	day, _ := Utils.InterfaceConvertInt(c.Param("day"))
 	month, _ := Utils.InterfaceConvertInt(c.Param("month"))
 	year, _ := Utils.InterfaceConvertInt(c.Param("year"))
@@ -27,6 +29,7 @@ func (b BankAPI) GetBankInfoHandler(c echo.Context) error {
 		Date: data,
 	}
 
+	fmt.Println("it happened here")
 	err := b.BankApplication.SetBankInfo(ctx, &updateBankStruct)
 
 	checkError := &errPkg.CheckError{
@@ -43,6 +46,7 @@ func (b BankAPI) GetBankInfoHandler(c echo.Context) error {
 
 	bankInfo, err := b.BankApplication.GetBankInfo(ctx, &updateBankStruct)
 	if err != nil {
+		fmt.Println("it happened here1")
 		return c.JSON(checkError.CheckErrorsBank(err),
 			errPkg.ResultError{
 				Status:  http.StatusInternalServerError,

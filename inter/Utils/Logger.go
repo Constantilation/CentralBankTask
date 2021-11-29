@@ -1,7 +1,7 @@
 package Utils
 
 import (
-	errors "CentralBankTask/internal/Middleware/Error"
+	errors "CentralBankTask/inter/Middleware/Error"
 	"github.com/natefinch/lumberjack"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"

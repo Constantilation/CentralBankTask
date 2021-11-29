@@ -1,11 +1,11 @@
 package Application
 
 import (
-	"CentralBankTask/internal/Bank"
-	"CentralBankTask/internal/Interface"
-	"CentralBankTask/internal/Middleware/Error"
-	"CentralBankTask/internal/Utils"
-	"CentralBankTask/internal/domain"
+	"CentralBankTask/inter/Bank"
+	"CentralBankTask/inter/Interface"
+	"CentralBankTask/inter/Middleware/Error"
+	"CentralBankTask/inter/Utils"
+	"CentralBankTask/inter/domain"
 	"context"
 )
 

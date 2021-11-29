@@ -2,11 +2,11 @@ package build
 
 import (
 	"CentralBankTask/config"
-	"CentralBankTask/internal/Bank/API"
-	"CentralBankTask/internal/Bank/Application"
-	"CentralBankTask/internal/Bank/Store"
-	"CentralBankTask/internal/Interface"
-	errPkg "CentralBankTask/internal/Middleware/Error"
+	"CentralBankTask/inter/Bank/API"
+	"CentralBankTask/inter/Bank/Application"
+	"CentralBankTask/inter/Bank/Store"
+	"CentralBankTask/inter/Interface"
+	errPkg "CentralBankTask/inter/Middleware/Error"
 	"context"
 	"github.com/jackc/pgx/v4/pgxpool"
 	pgxpool2 "github.com/jackc/pgx/v4/pgxpool"

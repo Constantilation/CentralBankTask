@@ -1,7 +1,7 @@
 package Middleware
 
 import (
-	errPkg "CentralBankTask/internal/Middleware/Error"
+	errPkg "CentralBankTask/inter/Middleware/Error"
 	"github.com/labstack/echo"
 	"math"
 )

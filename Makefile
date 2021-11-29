@@ -1,12 +1,12 @@
 BINARY=engine
 engine:
-	go build -o ${BINARY} app/*.go
+	CGO_ENABLED=0 go build -gcflags "all=-N -l" -o ${BINARY} app/*.go
 
 clean:
 	if [ -f ${BINARY} ] ; then rm ${BINARY} ; fi
 
 docker:
-	docker build -t interviewtask .
+	docker build -t centralbanktask .
 
 run:
 	docker-compose up --build -d
@@ -14,4 +14,5 @@ run:
 stop:
 	docker-compose down
 
-.PHONY: clean install unittest build docke
+runall:
+	sudo make stop; sudo docker volume prune; sudo make docker;  sudo docker-compose --verbose up

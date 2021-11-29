@@ -1,7 +1,7 @@
 package domain
 
 import (
-	errors "CentralBankTask/internal/Middleware/Error"
+	errors "CentralBankTask/inter/Middleware/Error"
 	"encoding/xml"
 	"io"
 	"io/ioutil"
@@ -43,23 +43,15 @@ func (v *ValCurs) ReformatFile(url, filename string) error {
 	if err != nil {
 		return err
 	}
-	var path string
-	path = "./"
 
-	cmd := exec.Command("iconv", "-f", "cp1251", "-t", "utf8", path+filename, "-o", path+filename)
+	cmd := exec.Command("iconv", "-f", "cp1251", "-t", "utf8", filename, "-o", filename)
 	_, err = cmd.CombinedOutput()
-	if err != nil {
-		return err
-	}
 
-	cmd2 := exec.Command("sed", "-i", "s/ encoding=\"windows-1251\"//", path+filename)
+	cmd2 := exec.Command("sed", "-i", "s/ encoding=\"windows-1251\"//", filename)
 
 	_, err = cmd2.CombinedOutput()
-	if err != nil {
-		return err
-	}
 
-	resp, err := os.Open(path + filename)
+	resp, err := os.Open(filename)
 
 	if err != nil {
 		return err
@@ -67,7 +59,7 @@ func (v *ValCurs) ReformatFile(url, filename string) error {
 
 		defer func() {
 			resp.Close()
-			os.Remove(path + filename)
+			os.Remove(filename)
 		}()
 		body, err := ioutil.ReadAll(resp)
 		if err != nil {

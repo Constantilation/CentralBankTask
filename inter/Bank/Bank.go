@@ -1,7 +1,7 @@
 package Bank
 
 import (
-	"CentralBankTask/internal/domain"
+	"CentralBankTask/inter/domain"
 	"time"
 )
 

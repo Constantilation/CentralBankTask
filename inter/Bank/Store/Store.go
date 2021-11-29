@@ -1,10 +1,10 @@
 package Store
 
 import (
-	"CentralBankTask/internal/Interface"
-	errPkg "CentralBankTask/internal/Middleware/Error"
-	"CentralBankTask/internal/Utils"
-	"CentralBankTask/internal/domain"
+	"CentralBankTask/inter/Interface"
+	errPkg "CentralBankTask/inter/Middleware/Error"
+	"CentralBankTask/inter/Utils"
+	"CentralBankTask/inter/domain"
 	"context"
 	"time"
 )
@@ -178,7 +178,7 @@ func (b2 BankStore) GetMinValue(ctx context.Context, dateInterval domain.DateInt
 func (b2 BankStore) GetAverageValue(ctx context.Context, dateInterval domain.DateInterval) ([]domain.ValuteValue, error) {
 	var avgValuteSlice []domain.ValuteValue
 	row, err := b2.Conn.Query(ctx,
-		"SELECT DISTINCT * FROM bankinfo WHERE valutevalue = (SELECT PERCENTILE_DISC(0.5) WITHIN GROUP(ORDER BY valutevalue) FROM bankinfo) AND fulldate <= $1 AND fulldate > $2",
+		"SELECT DISTINCT * FROM bankinfo WHERE valutevalue = (SELECT PERCENTILE_DISC(0.5) WITHIN GROUP(ORDER BY valutevalue) FROM bankinfo WHERE fulldate <= $1 AND fulldate > $2) AND fulldate <= $1 AND fulldate > $2",
 		dateInterval.BegD, dateInterval.EndD)
 
 	if err != nil {
